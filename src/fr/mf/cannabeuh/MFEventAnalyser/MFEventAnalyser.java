@@ -157,12 +157,6 @@ public class MFEventAnalyser extends JavaPlugin{
 				}
 				if(souscommande2.equals("entity")){
 					analyseEntity=false;
-					Entitycreaturespawn=0;
-					Entitycreeperpower=0;
-					Entityendermanpickup=0;
-					Entityendermanplace=0;
-					Entitypigzap=0;
-					Entityslimesplit=0;
 					jsend.sendMessage("resultat de l'analyse mob.");
 					jsend.sendMessage("Entitycreaturespawn:"+Entitycreaturespawn);
 					jsend.sendMessage("Entitycreeperpower:"+Entitycreeperpower);
