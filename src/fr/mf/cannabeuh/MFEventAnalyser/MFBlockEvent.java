@@ -14,7 +14,10 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.block.SignChangeEvent;
 
 public class MFBlockEvent extends BlockListener {
 	MFEventAnalyser plugin;
@@ -86,9 +89,24 @@ public class MFBlockEvent extends BlockListener {
 			plugin.blockplace++;
 		}
 	}
+	public void onBlockRedstoneChange(BlockRedstoneEvent event){
+		if(plugin.analyseBlock==true){
+			plugin.blockredstone++;
+		}
+	}
 	public void onBlockSpread(BlockSpreadEvent event){
 		if(plugin.analyseBlock==true){
 			plugin.blockspread++;
+		}
+	}
+	public void onLeavesDecay(LeavesDecayEvent event){
+		if(plugin.analyseBlock==true){
+			plugin.blockleavesdecay++;
+		}
+	}
+	public void onSignChange(SignChangeEvent event){
+		if(plugin.analyseBlock==true){
+			plugin.blocksignchange++;
 		}
 	}
 }

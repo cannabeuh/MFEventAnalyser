@@ -27,7 +27,10 @@ public class MFEventAnalyser extends JavaPlugin{
 	int blockpistonextend;
 	int blockpistonretract;
 	int blockplace;
+	int blockredstone;
 	int blockspread;
+	int blockleavesdecay;
+	int blocksignchange;
 	
 	boolean analyseWorld;
 	int Worldchunkload;
@@ -61,7 +64,10 @@ public class MFEventAnalyser extends JavaPlugin{
 		pm.registerEvent(Event.Type.BLOCK_PISTON_EXTEND,blocklisteners,Priority.Low,this);
 		pm.registerEvent(Event.Type.BLOCK_PISTON_RETRACT,blocklisteners,Priority.Low,this);
 		pm.registerEvent(Event.Type.BLOCK_PLACE,blocklisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.REDSTONE_CHANGE,blocklisteners,Priority.Low,this);
 		pm.registerEvent(Event.Type.BLOCK_SPREAD,blocklisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.LEAVES_DECAY,blocklisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.SIGN_CHANGE,blocklisteners,Priority.Low,this);
 		
 		MFWorldEvent worldlisteners = new MFWorldEvent(this);
 		pm.registerEvent(Event.Type.CHUNK_LOAD,worldlisteners,Priority.Low,this);
@@ -97,7 +103,10 @@ public class MFEventAnalyser extends JavaPlugin{
 		blockpistonextend=0;
 		blockpistonretract=0;
 		blockplace=0;
+		blockredstone=0;
 		blockspread=0;
+		blockleavesdecay=0;
+		blocksignchange=0;
 	}
 	public void resetcounteurworld(){
 		analyseWorld=false;
@@ -142,7 +151,10 @@ public class MFEventAnalyser extends JavaPlugin{
 					jsend.sendMessage("blockpistonextend:"+blockpistonextend);
 					jsend.sendMessage("blockpistonretract:"+blockpistonretract);
 					jsend.sendMessage("blockplace:"+blockplace);
+					jsend.sendMessage("blockredstone:"+blockredstone);
 					jsend.sendMessage("blockspread:"+blockspread);
+					jsend.sendMessage("blockleavesdecay:"+blockleavesdecay);
+					jsend.sendMessage("blocksignchange:"+blocksignchange);
 					resetcounteurBlock();
 					return true;
 				}
@@ -161,7 +173,7 @@ public class MFEventAnalyser extends JavaPlugin{
 					jsend.sendMessage("Entitycreaturespawn:"+Entitycreaturespawn);
 					jsend.sendMessage("Entitycreeperpower:"+Entitycreeperpower);
 					jsend.sendMessage("Entityendermanpickup:"+Entityendermanpickup);
-					jsend.sendMessage("Entityendermanpickup:"+Entityendermanpickup);
+					jsend.sendMessage("Entityendermanplace:"+Entityendermanplace);
 					jsend.sendMessage("Entitypigzap:"+Entitypigzap);
 					jsend.sendMessage("Entityslimesplit:"+Entityslimesplit);
 					resetcounteurEntity();
