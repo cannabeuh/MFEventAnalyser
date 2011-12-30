@@ -29,10 +29,19 @@ public class MFEventAnalyser extends JavaPlugin{
 	int blockplace;
 	int blockspread;
 	
-	boolean analyseChunk;
-	int chunkload;
-	int chunkunload;
-	int chunkpopulated;
+	boolean analyseWorld;
+	int Worldchunkload;
+	int Worldchunkunload;
+	int Worldchunkpopulated;
+	
+	boolean analyseEntity;
+	int Entitycreaturespawn;
+	int Entitycreeperpower;
+	int Entityendermanpickup;
+	int Entityendermanplace;
+	int Entitypigzap;
+	int Entityslimesplit;
+	
 	public void onEnable()
 	{
 		PluginManager pm=getServer().getPluginManager();
@@ -54,10 +63,18 @@ public class MFEventAnalyser extends JavaPlugin{
 		pm.registerEvent(Event.Type.BLOCK_PLACE,blocklisteners,Priority.Low,this);
 		pm.registerEvent(Event.Type.BLOCK_SPREAD,blocklisteners,Priority.Low,this);
 		
-		MFChunkEvent chunklisteners = new MFChunkEvent(this);
-		pm.registerEvent(Event.Type.CHUNK_LOAD,chunklisteners,Priority.Low,this);
-		pm.registerEvent(Event.Type.CHUNK_POPULATED,chunklisteners,Priority.Low,this);
-		pm.registerEvent(Event.Type.CHUNK_UNLOAD,chunklisteners,Priority.Low,this);
+		MFWorldEvent worldlisteners = new MFWorldEvent(this);
+		pm.registerEvent(Event.Type.CHUNK_LOAD,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.CHUNK_POPULATED,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.CHUNK_UNLOAD,worldlisteners,Priority.Low,this);
+
+		MFEntityEvent Entitylisteners = new MFEntityEvent(this);
+		pm.registerEvent(Event.Type.CREATURE_SPAWN,Entitylisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.CREEPER_POWER,Entitylisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.ENDERMAN_PICKUP,Entitylisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.ENDERMAN_PLACE,Entitylisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.PIG_ZAP,Entitylisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.SLIME_SPLIT,Entitylisteners,Priority.Low,this);
 		
 		log.info("[MINE-FRANCE] ############## ANALYSER D'EVENTS ############## ON");
 	}
@@ -82,11 +99,20 @@ public class MFEventAnalyser extends JavaPlugin{
 		blockplace=0;
 		blockspread=0;
 	}
-	public void resetcounteurChunk(){
-		analyseChunk=false;
-		chunkload=0;
-		chunkunload=0;
-		chunkpopulated=0;
+	public void resetcounteurworld(){
+		analyseWorld=false;
+		Worldchunkload=0;
+		Worldchunkunload=0;
+		Worldchunkpopulated=0;
+	}
+	public void resetcounteurEntity(){
+		analyseEntity=false;
+		Entitycreaturespawn=0;
+		Entitycreeperpower=0;
+		Entityendermanpickup=0;
+		Entityendermanplace=0;
+		Entitypigzap=0;
+		Entityslimesplit=0;
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
@@ -103,7 +129,7 @@ public class MFEventAnalyser extends JavaPlugin{
 				String souscommande2 = ((args.length > 1) ? args[1] : "rien");
 				if(souscommande2.equals("block")){
 					analyseBlock=false;
-					jsend.sendMessage("resultat de l'analyse.");
+					jsend.sendMessage("resultat de l'analyse block.");
 					jsend.sendMessage("blockbreak:"+blockbreak);
 					jsend.sendMessage("blockcanbuild:"+blockcanbuild);
 					jsend.sendMessage("blockdamage:"+blockdamage);
@@ -120,20 +146,39 @@ public class MFEventAnalyser extends JavaPlugin{
 					resetcounteurBlock();
 					return true;
 				}
-				if(souscommande2.equals("chunk")){
-					analyseChunk=false;
-					jsend.sendMessage("resultat de l'analyse.");
-					jsend.sendMessage("chunkload:"+chunkload);
-					jsend.sendMessage("chunkunload:"+chunkunload);
-					jsend.sendMessage("chunkpopulated:"+chunkpopulated);
-					resetcounteurChunk();
+				if(souscommande2.equals("world")){
+					analyseWorld=false;
+					jsend.sendMessage("resultat de l'analyse world.");
+					jsend.sendMessage("worldchunkload:"+Worldchunkload);
+					jsend.sendMessage("worldchunkunload:"+Worldchunkunload);
+					jsend.sendMessage("worldchunkpopulated:"+Worldchunkpopulated);
+					resetcounteurworld();
 					return true;
 				}
-				jsend.sendMessage("Result : block, chunk.");
+				if(souscommande2.equals("entity")){
+					analyseEntity=false;
+					Entitycreaturespawn=0;
+					Entitycreeperpower=0;
+					Entityendermanpickup=0;
+					Entityendermanplace=0;
+					Entitypigzap=0;
+					Entityslimesplit=0;
+					jsend.sendMessage("resultat de l'analyse mob.");
+					jsend.sendMessage("Entitycreaturespawn:"+Entitycreaturespawn);
+					jsend.sendMessage("Entitycreeperpower:"+Entitycreeperpower);
+					jsend.sendMessage("Entityendermanpickup:"+Entityendermanpickup);
+					jsend.sendMessage("Entityendermanpickup:"+Entityendermanpickup);
+					jsend.sendMessage("Entitypigzap:"+Entitypigzap);
+					jsend.sendMessage("Entityslimesplit:"+Entityslimesplit);
+					resetcounteurEntity();
+					return true;
+				}
+				jsend.sendMessage("Result : block, world, entity.");
 				return true;
 			}
 			if(souscommande.equals("block")){
 				if(analyseBlock==true){
+					analyseBlock=false;
 					jsend.sendMessage("AnalyseBlock false.");
 					return true;
 				}else{
@@ -142,17 +187,29 @@ public class MFEventAnalyser extends JavaPlugin{
 					return true;
 				}
 			}
-			if(souscommande.equals("chunk")){
-				if(analyseChunk==true){
-					jsend.sendMessage("AnalyseChunk false.");
+			if(souscommande.equals("world")){
+				if(analyseWorld==true){
+					analyseWorld=false;
+					jsend.sendMessage("analyseWorld false.");
 					return true;
 				}else{
-					analyseChunk=true;
-					jsend.sendMessage("AnalyseChunk true.");
+					analyseWorld=true;
+					jsend.sendMessage("analyseWorld true.");
 					return true;
 				}
 			}
-			jsend.sendMessage("Analyser : block, chunk.");
+			if(souscommande.equals("entity")){
+				if(analyseEntity==true){
+					analyseEntity=false;
+					jsend.sendMessage("AnalyseEntity false.");
+					return true;
+				}else{
+					analyseEntity=true;
+					jsend.sendMessage("AnalyseEntity true.");
+					return true;
+				}
+			}
+			jsend.sendMessage("Analyser : block, world, entity.");
 			return true;
 		}
 		return false;

@@ -5,24 +5,24 @@ import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldListener;
 
-public class MFChunkEvent extends WorldListener {
+public class MFWorldEvent extends WorldListener {
 	MFEventAnalyser plugin;
-	public MFChunkEvent(MFEventAnalyser mfEventAnalyser) {
+	public MFWorldEvent(MFEventAnalyser mfEventAnalyser) {
 		plugin = mfEventAnalyser;
 	}
 	public void onChunkLoad(ChunkLoadEvent event){
-		if(plugin.analyseChunk==true){
-			plugin.chunkload++;
+		if(plugin.analyseWorld==true){
+			plugin.Worldchunkload++;
 		}
 	}
 	public void onChunkPopulate(ChunkPopulateEvent event){
-		if(plugin.analyseChunk==true){
-			plugin.chunkpopulated++;
+		if(plugin.analyseWorld==true){
+			plugin.Worldchunkpopulated++;
 		}
 	}
 	public void onChunkUnload(ChunkUnloadEvent event){
-		if(plugin.analyseChunk==true){
-			plugin.chunkunload++;
+		if(plugin.analyseWorld==true){
+			plugin.Worldchunkunload++;
 		}
 	}
 }
