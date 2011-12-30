@@ -1,0 +1,10 @@
+name: MFEventAnalyser
+main: fr.mf.cannabeuh.MFEventAnalyser.MFEventAnalyser
+version: 0.01
+website: http://mine-france.fr
+authors:
+- cannabeuh 
+commands:
+  mfanalyser:
+    description: Analyseur d'events
+    usage: /<command>
