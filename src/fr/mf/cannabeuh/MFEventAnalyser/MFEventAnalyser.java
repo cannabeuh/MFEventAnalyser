@@ -144,6 +144,11 @@ public class MFEventAnalyser extends JavaPlugin{
 		Entitypigzap=0;
 		Entityslimesplit=0;
 	}
+	public void resetAllCounteur(){
+		resetcounteurBlock();
+		resetcounteurworld();
+		resetcounteurEntity();
+	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		Player jsend; 
@@ -159,52 +164,24 @@ public class MFEventAnalyser extends JavaPlugin{
 				String souscommande2 = ((args.length > 1) ? args[1] : "rien");
 				if(souscommande2.equals("block")){
 					analyseBlock=false;
-					jsend.sendMessage("resultat de l'analyse block.");
-					jsend.sendMessage("blockbreak:"+blockbreak);
-					jsend.sendMessage("blockcanbuild:"+blockcanbuild);
-					jsend.sendMessage("blockdamage:"+blockdamage);
-					jsend.sendMessage("blockdispense:"+blockdispense);
-					jsend.sendMessage("blockfade:"+blockfade);
-					jsend.sendMessage("blockform:"+blockform);
-					jsend.sendMessage("blockformto:"+blockformto);
-					jsend.sendMessage("blockignite:"+blockignite);
-					jsend.sendMessage("blockphysics:"+blockphysics);
-					jsend.sendMessage("blockpistonextend:"+blockpistonextend);
-					jsend.sendMessage("blockpistonretract:"+blockpistonretract);
-					jsend.sendMessage("blockplace:"+blockplace);
-					jsend.sendMessage("blockredstone:"+blockredstone);
-					jsend.sendMessage("blockspread:"+blockspread);
-					jsend.sendMessage("blockleavesdecay:"+blockleavesdecay);
-					jsend.sendMessage("blocksignchange:"+blocksignchange);
-					resetcounteurBlock();
+					sendBlock(jsend);
 					return true;
 				}
 				if(souscommande2.equals("world")){
 					analyseWorld=false;
-					jsend.sendMessage("resultat de l'analyse world.");
-					jsend.sendMessage("Worldchunkload:"+Worldchunkload);
-					jsend.sendMessage("Worldchunkunload:"+Worldchunkunload);
-					jsend.sendMessage("Worldchunkpopulated:"+Worldchunkpopulated);
-					jsend.sendMessage("Worldportalcreate:"+Worldportalcreate);
-					jsend.sendMessage("Worldspawnchange:"+Worldspawnchange);
-					jsend.sendMessage("Worldstructuregrow:"+Worldstructuregrow);
-					jsend.sendMessage("Worldinit:"+Worldinit);
-					jsend.sendMessage("Worldload:"+Worldload);
-					jsend.sendMessage("Worldunload:"+Worldunload);
-					jsend.sendMessage("Worldsave:"+Worldsave);
-					resetcounteurworld();
+					sendWorld(jsend);
 					return true;
 				}
 				if(souscommande2.equals("entity")){
 					analyseEntity=false;
-					jsend.sendMessage("resultat de l'analyse mob.");
-					jsend.sendMessage("Entitycreaturespawn:"+Entitycreaturespawn);
-					jsend.sendMessage("Entitycreeperpower:"+Entitycreeperpower);
-					jsend.sendMessage("Entityendermanpickup:"+Entityendermanpickup);
-					jsend.sendMessage("Entityendermanplace:"+Entityendermanplace);
-					jsend.sendMessage("Entitypigzap:"+Entitypigzap);
-					jsend.sendMessage("Entityslimesplit:"+Entityslimesplit);
-					resetcounteurEntity();
+					sendEntity(jsend);
+					return true;
+				}
+				if(souscommande2.equals("all")){
+					analyseBlock=false;
+					analyseWorld=false;
+					analyseEntity=false;
+					sendAll(jsend);
 					return true;
 				}
 				jsend.sendMessage("Result : block, world, entity.");
@@ -247,5 +224,56 @@ public class MFEventAnalyser extends JavaPlugin{
 			return true;
 		}
 		return false;
+	}
+	public void sendBlock(Player jsend){
+		jsend.sendMessage("------- Resultat de l'analyse Block -------");
+		jsend.sendMessage("blockbreak:"+blockbreak);
+		jsend.sendMessage("blockcanbuild:"+blockcanbuild);
+		jsend.sendMessage("blockdamage:"+blockdamage);
+		jsend.sendMessage("blockdispense:"+blockdispense);
+		jsend.sendMessage("blockfade:"+blockfade);
+		jsend.sendMessage("blockform:"+blockform);
+		jsend.sendMessage("blockformto:"+blockformto);
+		jsend.sendMessage("blockignite:"+blockignite);
+		jsend.sendMessage("blockphysics:"+blockphysics);
+		jsend.sendMessage("blockpistonextend:"+blockpistonextend);
+		jsend.sendMessage("blockpistonretract:"+blockpistonretract);
+		jsend.sendMessage("blockplace:"+blockplace);
+		jsend.sendMessage("blockredstone:"+blockredstone);
+		jsend.sendMessage("blockspread:"+blockspread);
+		jsend.sendMessage("blockleavesdecay:"+blockleavesdecay);
+		jsend.sendMessage("blocksignchange:"+blocksignchange);
+	}
+	public void sendEntity(Player jsend){
+		jsend.sendMessage("------- Resultat de l'analyse Entity -------");
+		jsend.sendMessage("Entitycreaturespawn:"+Entitycreaturespawn);
+		jsend.sendMessage("Entitycreeperpower:"+Entitycreeperpower);
+		jsend.sendMessage("Entityendermanpickup:"+Entityendermanpickup);
+		jsend.sendMessage("Entityendermanplace:"+Entityendermanplace);
+		jsend.sendMessage("Entitypigzap:"+Entitypigzap);
+		jsend.sendMessage("Entityslimesplit:"+Entityslimesplit);
+	}
+	public void sendWorld(Player jsend){
+		jsend.sendMessage("------- Resultat de l'analyse World -------");
+		jsend.sendMessage("Worldchunkload:"+Worldchunkload);
+		jsend.sendMessage("Worldchunkunload:"+Worldchunkunload);
+		jsend.sendMessage("Worldchunkpopulated:"+Worldchunkpopulated);
+		jsend.sendMessage("Worldportalcreate:"+Worldportalcreate);
+		jsend.sendMessage("Worldspawnchange:"+Worldspawnchange);
+		jsend.sendMessage("Worldstructuregrow:"+Worldstructuregrow);
+		jsend.sendMessage("Worldinit:"+Worldinit);
+		jsend.sendMessage("Worldload:"+Worldload);
+		jsend.sendMessage("Worldunload:"+Worldunload);
+		jsend.sendMessage("Worldsave:"+Worldsave);
+	}
+	public void sendAll(Player jsend){
+		jsend.sendMessage("------- Resultat de l'analyse COMPLET -------");
+		jsend.sendMessage("---------------------------------------------");
+		sendBlock(jsend);
+		jsend.sendMessage("---------------------------------------------");
+		sendWorld(jsend);
+		jsend.sendMessage("---------------------------------------------");
+		sendEntity(jsend);
+		jsend.sendMessage("---------------------------------------------");
 	}
 }
