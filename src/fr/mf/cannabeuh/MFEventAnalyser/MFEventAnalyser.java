@@ -36,6 +36,13 @@ public class MFEventAnalyser extends JavaPlugin{
 	int Worldchunkload;
 	int Worldchunkunload;
 	int Worldchunkpopulated;
+	int Worldportalcreate;
+	int Worldspawnchange;
+	int Worldstructuregrow;
+	int Worldinit;
+	int Worldload;
+	int Worldunload;
+	int Worldsave;
 	
 	boolean analyseEntity;
 	int Entitycreaturespawn;
@@ -73,6 +80,13 @@ public class MFEventAnalyser extends JavaPlugin{
 		pm.registerEvent(Event.Type.CHUNK_LOAD,worldlisteners,Priority.Low,this);
 		pm.registerEvent(Event.Type.CHUNK_POPULATED,worldlisteners,Priority.Low,this);
 		pm.registerEvent(Event.Type.CHUNK_UNLOAD,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.PORTAL_CREATE,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.SPAWN_CHANGE,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.STRUCTURE_GROW,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.WORLD_INIT,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.WORLD_LOAD,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.WORLD_SAVE,worldlisteners,Priority.Low,this);
+		pm.registerEvent(Event.Type.WORLD_UNLOAD,worldlisteners,Priority.Low,this);
 
 		MFEntityEvent Entitylisteners = new MFEntityEvent(this);
 		pm.registerEvent(Event.Type.CREATURE_SPAWN,Entitylisteners,Priority.Low,this);
@@ -113,6 +127,13 @@ public class MFEventAnalyser extends JavaPlugin{
 		Worldchunkload=0;
 		Worldchunkunload=0;
 		Worldchunkpopulated=0;
+		Worldportalcreate=0;
+		Worldspawnchange=0;
+		Worldstructuregrow=0;
+		Worldinit=0;
+		Worldload=0;
+		Worldunload=0;
+		Worldsave=0;
 	}
 	public void resetcounteurEntity(){
 		analyseEntity=false;
@@ -161,9 +182,16 @@ public class MFEventAnalyser extends JavaPlugin{
 				if(souscommande2.equals("world")){
 					analyseWorld=false;
 					jsend.sendMessage("resultat de l'analyse world.");
-					jsend.sendMessage("worldchunkload:"+Worldchunkload);
-					jsend.sendMessage("worldchunkunload:"+Worldchunkunload);
-					jsend.sendMessage("worldchunkpopulated:"+Worldchunkpopulated);
+					jsend.sendMessage("Worldchunkload:"+Worldchunkload);
+					jsend.sendMessage("Worldchunkunload:"+Worldchunkunload);
+					jsend.sendMessage("Worldchunkpopulated:"+Worldchunkpopulated);
+					jsend.sendMessage("Worldportalcreate:"+Worldportalcreate);
+					jsend.sendMessage("Worldspawnchange:"+Worldspawnchange);
+					jsend.sendMessage("Worldstructuregrow:"+Worldstructuregrow);
+					jsend.sendMessage("Worldinit:"+Worldinit);
+					jsend.sendMessage("Worldload:"+Worldload);
+					jsend.sendMessage("Worldunload:"+Worldunload);
+					jsend.sendMessage("Worldsave:"+Worldsave);
 					resetcounteurworld();
 					return true;
 				}
